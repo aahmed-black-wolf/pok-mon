@@ -9,8 +9,8 @@ export type TPokemonListResponse = {
 };
 
 export type TGetPokmonList = {
-  offset?: number;
-  limit?: number;
+  offset?: number | string;
+  limit?: number | string;
 };
 
 export type TPokmonId = number | string;

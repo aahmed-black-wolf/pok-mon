@@ -8,7 +8,7 @@ type TUsePokmonList = {
   offset?: number;
 };
 
-const getPokmonList = async ({ offset = 0, limit = 10 }: TGetPokmonList) => {
+const getPokmonList = async ({ offset = 0, limit = 20 }: TGetPokmonList) => {
   const response = await clientFetch.get(
     `pokemon?limit=${limit}&offset=${offset}`
   );
