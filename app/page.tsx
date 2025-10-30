@@ -6,7 +6,7 @@ type THomeProps = {
 };
 
 export default async function Home({ searchParams }: THomeProps) {
-  const { limit, offset } = await searchParams;
-  const pokemonListData = await getPokemonList({ limit, offset });
+  const query = await searchParams;
+  const pokemonListData = await getPokemonList(query);
   return <PokemonPage pokemonListResponse={pokemonListData} />;
 }
