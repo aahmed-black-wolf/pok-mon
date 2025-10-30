@@ -1,32 +1,31 @@
 import { clientFetch } from "@/src/utils/fetch/client";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import { TPokemonListResponse, TGetPokemonList } from "../../@types/pok-mon";
+import { TPokemonListResponse } from "../../@types/pok-mon";
+import { ReadonlyURLSearchParams } from "next/navigation";
 
 type TUsePokemonList = {
   initialValues?: TPokemonListResponse;
-  limit?: number;
-  offset?: number;
+  searchParams: ReadonlyURLSearchParams;
 };
 
-const getPokemonList = async ({ offset = 0, limit = 20 }: TGetPokemonList) => {
-  const response = await clientFetch.get(
-    `pokemon?limit=${limit}&offset=${offset}`
-  );
+const getPokemonList = async (searchParams: ReadonlyURLSearchParams) => {
+  const response = await clientFetch.get("pokemon", {
+    searchParams: searchParams,
+  });
   const json = (await response.json()) as TPokemonListResponse;
   return json;
 };
 
 export const usePokemonList = ({
   initialValues,
-  limit,
-  offset,
+  searchParams,
 }: TUsePokemonList) => {
   const queryInitialData = initialValues ? initialValues : undefined;
 
   const query = useQuery<TPokemonListResponse>({
-    queryKey: ["POKMON-LIST"],
+    queryKey: ["POKMON-LIST", searchParams.toString()],
     initialData: queryInitialData,
-    queryFn: () => getPokemonList({ limit, offset }),
+    queryFn: () => getPokemonList(searchParams),
     placeholderData: keepPreviousData,
     staleTime: 5000,
   });

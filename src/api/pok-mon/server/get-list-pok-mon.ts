@@ -5,19 +5,20 @@ const normalize = (response: TPokemonListResponse): TPokemonListResponse => {
   return response as TPokemonListResponse;
 };
 
-export const getPokemonList = async ({
-  offset = 0,
-  limit = 20,
-}: TGetPokemonList) => {
+export const getPokemonList = async (
+  searchParams: TGetPokemonList
+): Promise<TPokemonListResponse> => {
   try {
-    const response = await serverFetch.get(
-      `pokemon?limit=${limit}&offset=${offset}`
-    );
-
+    const response = await serverFetch.get("pokemon", {
+      searchParams: searchParams,
+    });
     const json = (await response?.json()) as TPokemonListResponse;
+
+    console.log(json);
 
     return normalize(json);
   } catch (error) {
-    console.log("error", error);
+    console.error("error", error);
+    throw error;
   }
 };

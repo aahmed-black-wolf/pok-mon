@@ -35,10 +35,37 @@ export const clientFetch = ky.create(
       beforeRequest: [cookieInterceptor],
       afterResponse: [
         async (_input: Request, _options: Request, response: Response) => {
-          const body = await response.json();
+          // Clone response before reading body (body can only be read once)
+          const clonedResponse = response.clone();
+
+          // Read response body once (can only be read once)
+          let body;
+          try {
+            body = await clonedResponse.json();
+          } catch {
+            // If response body is not JSON, create a simple error object
+            body = {
+              message: response.statusText || `HTTP ${response.status}`,
+            };
+          }
+
+          // Check HTTP status codes first (since throwHttpErrors is false)
+          if (!response.ok) {
+            throw new Error(
+              JSON.stringify({
+                status: response.status,
+                statusText: response.statusText,
+                errors: body.errors || body.message || body,
+              })
+            );
+          }
+
+          // Also check for errors in response body even if status is OK
           if (body.errors) {
             throw new Error(JSON.stringify(body));
           }
+
+          return response;
         },
       ],
     },
