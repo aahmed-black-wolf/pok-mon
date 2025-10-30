@@ -9,13 +9,13 @@ export type TPokemonListResponse = {
 };
 
 export type TGetPokmonList = {
-  offset?: number;
-  limit?: number;
+  offset?: number | string;
+  limit?: number | string;
 };
 
 export type TPokmonId = number | string;
 
-export type TPokemonResponse = {
+export type TPokemonDataResponse = {
   id: number;
   name: string;
   order: number;

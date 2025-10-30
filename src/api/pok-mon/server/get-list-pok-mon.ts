@@ -7,7 +7,7 @@ const normalize = (response: TPokemonListResponse): TPokemonListResponse => {
 
 export const getPokmonList = async ({
   offset = 0,
-  limit = 10,
+  limit = 20,
 }: TGetPokmonList) => {
   try {
     const response = await serverFetch.get(

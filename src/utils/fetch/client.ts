@@ -1,7 +1,7 @@
 "use client";
 import jsCookie from "js-cookie";
 import ky, { BeforeRequestHook } from "ky";
-import merge from "lodash/merge";
+import merge from "lodash.merge";
 import { kyConfigs } from "../config/ky";
 
 const cookieInterceptor: BeforeRequestHook = async (request) => {
@@ -36,13 +36,7 @@ export const clientFetch = ky.create(
       afterResponse: [
         async (_input: Request, _options: Request, response: Response) => {
           const body = await response.json();
-          if (
-            body.errors ||
-            (body.status !== 201 &&
-              body.status !== 200 &&
-              body.status !== 202 &&
-              body.status !== 204)
-          ) {
+          if (body.errors) {
             throw new Error(JSON.stringify(body));
           }
         },
