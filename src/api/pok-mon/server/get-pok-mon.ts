@@ -1,5 +1,5 @@
 import { serverFetch } from "@/src/utils/fetch/server";
-import { TPokemonDataResponse, TPokmonId } from "../../@types/pok-mon";
+import { TPokemonDataResponse, TPokemonId } from "../../@types/pok-mon";
 
 const normalize = (
   response: TPokemonDataResponse[]
@@ -7,7 +7,7 @@ const normalize = (
   return response as TPokemonDataResponse[];
 };
 
-export const getPokmonData = async ({ id }: { id: TPokmonId }) => {
+export const getPokemonData = async ({ id }: { id: TPokemonId }) => {
   try {
     const response = await serverFetch.get(`pokemon/${id}`);
 

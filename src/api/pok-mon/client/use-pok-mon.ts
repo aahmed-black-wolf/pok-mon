@@ -1,25 +1,25 @@
 import { clientFetch } from "@/src/utils/fetch/client";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import { TPokemonDataResponse, TPokmonId } from "../../@types/pok-mon";
+import { TPokemonDataResponse, TPokemonId } from "../../@types/pok-mon";
 
-type TUsePokmonData = {
+type TUsePokemonData = {
   initialValues?: TPokemonDataResponse[];
-  id?: TPokmonId;
+  id?: TPokemonId;
 };
 
-const getPokmonData = async ({ id = 1 }: { id?: TPokmonId }) => {
+const getPokemonData = async ({ id = 1 }: { id?: TPokemonId }) => {
   const response = await clientFetch.get(`pokemon/${id}`);
   const json = (await response.json()) as TPokemonDataResponse[];
   return json;
 };
 
-export const usePokmonData = ({ initialValues, id }: TUsePokmonData) => {
+export const usePokemonData = ({ initialValues, id }: TUsePokemonData) => {
   const queryInitialData = initialValues ? initialValues : undefined;
 
   const query = useQuery<TPokemonDataResponse[]>({
     queryKey: ["POKMON", id],
     initialData: queryInitialData,
-    queryFn: () => getPokmonData({ id }),
+    queryFn: () => getPokemonData({ id }),
     placeholderData: keepPreviousData,
     staleTime: 5000,
   });

@@ -1,20 +1,72 @@
 @import "tailwindcss";
 
+/* === Pokédex Theme Variables === */
 :root {
-  --background: #ffffff;
+  /* 🌿 Base */
+  --background: #e9fff3;
   --foreground: #171717;
+
+  /* 🎨 Brand & Accent */
+  --accent-color: #e94057;
+  --gradient-start: #e94057;
+  --gradient-end: #8a2387;
+
+  /* 🧱 Surfaces */
+  --card-bg: #ffffff;
+  --card-border: #e2e8f0;
+  --card-hover: #f9fbff;
+  --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+
+  /* 🔥 Pokémon Type & XP */
+  --fire-color: #ff5959;
+  --xp-color: #4f46e5;
+
+  /* 🖋 Text */
+  --text-main: #1a1a1a;
+  --text-muted: #777777;
+  --title-text: #0f172a;
+  --subtitle-text: #475569;
+
+  /* 🧭 Buttons & Pagination */
+  --button-bg: #1f2937;
+  --button-bg-hover: #111827;
+  --button-text: #ffffff;
+  --pagination-bg: #f3f4f6;
+  --pagination-active: #3b82f6;
+  --pagination-text: #1f2937;
+
+  /* ⚙️ Misc */
+  --border-color: #dadada;
+  --skeleton-bg: #eaeaea;
+  --background-light: #ebf1fd;
 }
 
+/* === Tailwind Theme Mapping === */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-background-light: var(--background-light);
+  --color-accent: var(--accent-color);
+  --color-card: var(--card-bg);
+  --color-card-border: var(--card-border);
+  --color-card-hover: var(--card-hover);
+  --color-fire: var(--fire-color);
+  --color-xp: var(--xp-color);
+  --shadow-card: var(--card-shadow);
+
+  --color-text-main: var(--text-main);
+  --color-text-muted: var(--text-muted);
+  --color-title-text: var(--title-text);
+  --color-subtitle-text: var(--subtitle-text);
+
+  --color-button-bg: var(--button-bg);
+  --color-button-bg-hover: var(--button-bg-hover);
+  --color-button-text: var(--button-text);
+
+  --color-pagination-bg: var(--pagination-bg);
+  --color-pagination-active: var(--pagination-active);
+  --color-pagination-text: var(--pagination-text);
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }

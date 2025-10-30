@@ -1,19 +1,20 @@
+export type TPokemonResults = {
+  name: string;
+  url: string;
+};
 export type TPokemonListResponse = {
   count: number;
   next: string | null;
   previous: string | null;
-  results: {
-    name: string;
-    url: string;
-  }[];
+  results: TPokemonResults[];
 };
 
-export type TGetPokmonList = {
+export type TGetPokemonList = {
   offset?: number | string;
   limit?: number | string;
 };
 
-export type TPokmonId = number | string;
+export type TPokemonId = number | string;
 
 export type TPokemonDataResponse = {
   id: number;

@@ -1,17 +1,17 @@
 "use client";
 import { TPokemonDataResponse } from "@/src/api/@types/pok-mon";
-import { usePokmonData } from "@/src/api/pok-mon/client/use-pok-mon";
+import { usePokemonData } from "@/src/api/pok-mon/client/use-pok-mon";
 
-type TPokmonDeatilsPageProps = {
+type TPokemonDeatilsPageProps = {
   pokemonDataResponse?: TPokemonDataResponse[];
 };
 
-export default function PokmonDeatilsPage({
+export default function PokemonDeatilsPage({
   pokemonDataResponse,
-}: TPokmonDeatilsPageProps) {
-  const { data, isPending } = usePokmonData({
+}: TPokemonDeatilsPageProps) {
+  const { data, isPending } = usePokemonData({
     initialValues: pokemonDataResponse,
   });
 
-  return <div>PokmonDeatilsPage</div>;
+  return <div>PokemonDeatilsPage</div>;
 }
