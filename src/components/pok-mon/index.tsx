@@ -3,6 +3,7 @@
 import type { TPokemonListResponse } from "@/src/api/@types/pok-mon";
 import { usePokemonList } from "@/src/api/pok-mon/client/use-list-pok-mon";
 import PokemonList from "./page-list";
+import PokemonInfiniteList from "./page-infinite-list";
 import PokemonHeader from "../common/layout/pokmon-header";
 import { Pagination } from "../common/ui/pagination";
 import { useSearchParams } from "next/navigation";
@@ -16,6 +17,8 @@ export default function PokemonPage({
 }: TPokemonPageProps) {
   const searchParams = useSearchParams();
   const limit = searchParams.get("limit");
+  const mode = (searchParams.get("mode") as "list" | "infinite") || "list";
+
   const { data, isPending } = usePokemonList({
     initialValues: pokemonListResponse,
     searchParams,
@@ -24,11 +27,17 @@ export default function PokemonPage({
   return (
     <div className="gap-8 min-h-screen flex flex-col  bg-background-light items-center py-8">
       <PokemonHeader />
-      <PokemonList list={data?.results} />
-      <Pagination
-        count={data?.count || 1320}
-        countPerPage={limit ? Number(limit) : 20}
-      />
+      {mode === "infinite" ? (
+        <PokemonInfiniteList />
+      ) : (
+        <>
+          <PokemonList list={data?.results} />
+          <Pagination
+            count={data?.count || 1320}
+            countPerPage={limit ? Number(limit) : 20}
+          />
+        </>
+      )}
     </div>
   );
 }
