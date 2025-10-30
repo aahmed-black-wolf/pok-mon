@@ -5,7 +5,9 @@ const normalize = (response: TPokemonListResponse): TPokemonListResponse => {
   return response as TPokemonListResponse;
 };
 
-export const getPokemonList = async (searchParams: TGetPokemonList) => {
+export const getPokemonList = async (
+  searchParams: TGetPokemonList
+): Promise<TPokemonListResponse> => {
   try {
     const response = await serverFetch.get("pokemon", {
       searchParams: searchParams,
@@ -16,6 +18,7 @@ export const getPokemonList = async (searchParams: TGetPokemonList) => {
 
     return normalize(json);
   } catch (error) {
-    console.log("error", error);
+    console.error("error", error);
+    throw error;
   }
 };

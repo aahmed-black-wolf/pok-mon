@@ -23,7 +23,7 @@ export const usePokemonList = ({
   const queryInitialData = initialValues ? initialValues : undefined;
 
   const query = useQuery<TPokemonListResponse>({
-    queryKey: ["POKMON-LIST", ...searchParams],
+    queryKey: ["POKMON-LIST", searchParams.toString()],
     initialData: queryInitialData,
     queryFn: () => getPokemonList(searchParams),
     placeholderData: keepPreviousData,

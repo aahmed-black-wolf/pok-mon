@@ -7,10 +7,14 @@ import { motion } from "framer-motion";
 export default function PokemonList({ list }: { list?: TPokemonResults[] }) {
   const searchParams = useSearchParams();
   const offset = searchParams.get("offset");
+  const limit = searchParams.get("limit");
   const getOffset = useCallback(
-    (index: number) =>
-      offset ? (index + 1) * (Number(offset) + 1) : index + 1,
-    [offset]
+    (index: number) => {
+      const pageOffset = Number(offset) || 0;
+      const itemsPerPage = Number(limit) || 20;
+      return pageOffset * itemsPerPage + index + 1;
+    },
+    [offset, limit]
   );
   return (
     <motion.div
