@@ -1,12 +1,12 @@
-import { getPokmonData } from "@/src/api/pok-mon/server/get-pok-mon";
-import PokmonDeatilsPage from "@/src/components/pok-mon/page-details";
+import { getPokemonData } from "@/src/api/pok-mon/server/get-pok-mon";
+import PokemonDeatilsPage from "@/src/components/pok-mon/page-details";
 
-type TPokmonPageProps = {
+type TPokemonPageProps = {
   params: Promise<{ id: string | number }>;
 };
-export default async function PokmonPage({ params }: TPokmonPageProps) {
+export default async function PokemonPage({ params }: TPokemonPageProps) {
   const { id } = await params;
-  const pokmonDetails = await getPokmonData({ id });
+  const pokemonDetails = await getPokemonData({ id });
 
-  return <PokmonDeatilsPage pokemonDataResponse={pokmonDetails} />;
+  return <PokemonDeatilsPage pokemonDataResponse={pokemonDetails} />;
 }

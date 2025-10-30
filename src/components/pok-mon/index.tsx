@@ -1,16 +1,25 @@
 "use client";
 
 import { TPokemonListResponse } from "@/src/api/@types/pok-mon";
-import { usePokmonList } from "@/src/api/pok-mon/client/use-list-pok-mon";
+import { usePokemonList } from "@/src/api/pok-mon/client/use-list-pok-mon";
+import PokemonList from "./page-list";
+import PokemonHeader from "../common/layout/pokmon-header";
 
-type TPokmonPageProps = {
-  pokmonListResponse?: TPokemonListResponse;
+type TPokemonPageProps = {
+  pokemonListResponse?: TPokemonListResponse;
 };
 
-export default function PokmonPage({ pokmonListResponse }: TPokmonPageProps) {
-  const { data, isPending } = usePokmonList({
-    initialValues: pokmonListResponse,
+export default function PokemonPage({
+  pokemonListResponse,
+}: TPokemonPageProps) {
+  const { data, isPending } = usePokemonList({
+    initialValues: pokemonListResponse,
   });
 
-  return <div>PokmonPage</div>;
+  return (
+    <div className="gap-8 min-h-screen flex flex-col  bg-background-light items-center py-8">
+      <PokemonHeader />
+      <PokemonList list={data?.results} />
+    </div>
+  );
 }

@@ -1,14 +1,14 @@
 import { serverFetch } from "@/src/utils/fetch/server";
-import { TPokemonListResponse, TGetPokmonList } from "../../@types/pok-mon";
+import { TPokemonListResponse, TGetPokemonList } from "../../@types/pok-mon";
 
 const normalize = (response: TPokemonListResponse): TPokemonListResponse => {
   return response as TPokemonListResponse;
 };
 
-export const getPokmonList = async ({
+export const getPokemonList = async ({
   offset = 0,
   limit = 20,
-}: TGetPokmonList) => {
+}: TGetPokemonList) => {
   try {
     const response = await serverFetch.get(
       `pokemon?limit=${limit}&offset=${offset}`
