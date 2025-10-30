@@ -15,7 +15,7 @@ export type TGetPokmonList = {
 
 export type TPokmonId = number | string;
 
-export type TPokemonResponse = {
+export type TPokemonDataResponse = {
   id: number;
   name: string;
   order: number;

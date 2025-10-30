@@ -12,7 +12,5 @@ export default function PokmonPage({ pokmonListResponse }: TPokmonPageProps) {
     initialValues: pokmonListResponse,
   });
 
-  console.log(data);
-
   return <div>PokmonPage</div>;
 }
