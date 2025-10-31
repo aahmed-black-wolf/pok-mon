@@ -31,10 +31,32 @@ export const serverFetch = ky.create(
     hooks: {
       afterResponse: [
         async (_input: Request, _options: Request, response: Response) => {
-          const body = await response.json();
+          const clonedResponse = response.clone();
+
+          let body;
+          try {
+            body = await clonedResponse.json();
+          } catch {
+            body = {
+              message: response.statusText || `HTTP ${response.status}`,
+            };
+          }
+
+          if (!response.ok) {
+            throw new Error(
+              JSON.stringify({
+                status: response.status,
+                statusText: response.statusText,
+                errors: body.errors || body.message || body,
+              })
+            );
+          }
+
           if (body.errors) {
             throw new Error(JSON.stringify(body));
           }
+
+          return response;
         },
       ],
       beforeRequest: [cookieInterceptor],

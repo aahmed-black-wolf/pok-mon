@@ -14,8 +14,6 @@ export const getPokemonList = async (
     });
     const json = (await response?.json()) as TPokemonListResponse;
 
-    console.log(json);
-
     return normalize(json);
   } catch (error) {
     console.error("error", error);
