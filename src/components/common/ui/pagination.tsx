@@ -2,7 +2,7 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "./button";
-import { useState } from "react";
+import { useTransition } from "react";
 
 interface PaginationProps {
   count: number;
@@ -12,7 +12,7 @@ interface PaginationProps {
 export function Pagination({ count, countPerPage }: PaginationProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [isPending, setIsPending] = useState(false);
+  const [isPending, startTransition] = useTransition();
 
   const totalPages = Math.ceil(count / countPerPage);
   const currentOffset = Number.parseInt(searchParams.get("offset") || "0");
@@ -27,7 +27,6 @@ export function Pagination({ count, countPerPage }: PaginationProps) {
         pages.push(i);
       }
     } else {
-      // Show first N pages based on screen size
       for (let i = 1; i <= firstPagesToShow; i++) {
         pages.push(i);
       }
@@ -61,7 +60,10 @@ export function Pagination({ count, countPerPage }: PaginationProps) {
     const params = new URLSearchParams(searchParams);
     params.set("offset", offset.toString());
     params.set("limit", limit.toString());
-    router.push(`?${params.toString()}`);
+
+    startTransition(() => {
+      router.push(`?${params.toString()}`);
+    });
   };
 
   const mobilePageNumbers = getPageNumbers(true);

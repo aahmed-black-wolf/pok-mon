@@ -1,7 +1,6 @@
 import type { BeforeErrorHook, Options } from "ky";
 
 const errorInterceptor: BeforeErrorHook = async (error) => {
-  /** We can have shared hooks in here, or specifc hooks inside client, or server files */
   return error;
 };
 

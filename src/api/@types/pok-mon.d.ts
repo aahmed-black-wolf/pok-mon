@@ -21,10 +21,13 @@ export type TPokemonDataResponse = {
   name: string;
   order: number;
   height: number;
+  weight: number;
   base_experience: number;
   is_default: boolean;
   location_area_encounters: string;
-
+  sprites: TPokemonSprites;
+  stats: TPokemonStat[];
+  types: TPokemonType[];
   abilities: TPokemonAbility[];
   moves: TPokemonMove[];
   game_indices: TGameIndex[];
@@ -32,6 +35,34 @@ export type TPokemonDataResponse = {
   past_abilities: TPastAbility[];
   past_types: TPastType[];
   cries: TPokemonCries;
+};
+
+export type TPokemonSprites = {
+  front_default: string | null;
+  front_shiny: string | null;
+  front_female: string | null;
+  front_shiny_female: string | null;
+  back_default: string | null;
+  back_shiny: string | null;
+  back_female: string | null;
+  back_shiny_female: string | null;
+  other?: {
+    "official-artwork": {
+      front_default: string | null;
+      front_shiny: string | null;
+    };
+  };
+};
+
+export type TPokemonStat = {
+  base_stat: number;
+  effort: number;
+  stat: TNamedAPIResource;
+};
+
+export type TPokemonType = {
+  slot: number;
+  type: TNamedAPIResource;
 };
 
 export type TPokemonAbility = {

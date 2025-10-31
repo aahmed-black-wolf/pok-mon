@@ -49,7 +49,14 @@ export default function PokemonList({ list }: { list?: TPokemonResults[] }) {
               index
             )}.png`}
             title={item.name}
-            subTitle={index + 1 < 10 ? `#00${index + 1}` : `#0${index + 1}`}
+            subTitle={
+              getOffset(index) < 10
+                ? `#00${getOffset(index)}`
+                : getOffset(index) < 100
+                ? `#0${getOffset(index)}`
+                : `#${getOffset(index)}`
+            }
+            id={getOffset(index)}
           />
         </motion.div>
       ))}
