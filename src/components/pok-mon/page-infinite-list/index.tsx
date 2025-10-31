@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import Card from "../../common/ui/card";
 import { TPokemonResults } from "@/src/api/@types/pok-mon";
 import { motion } from "framer-motion";
@@ -13,26 +13,39 @@ export default function PokemonInfiniteList() {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useInfinitePokemonList(20);
 
-  // Flatten all pages into a single array
   const allPokemon: TPokemonResults[] =
     data?.pages.flatMap((page) => page.results) || [];
 
-  // Store loaded count in sessionStorage when it changes
+  const [animatedUpTo, setAnimatedUpTo] = useState(0);
+  const initializedRef = useRef(false);
+
   useEffect(() => {
     if (allPokemon.length > 0) {
-      sessionStorage.setItem(INFINITE_LOADED_COUNT_KEY, allPokemon.length.toString());
+      sessionStorage.setItem(
+        INFINITE_LOADED_COUNT_KEY,
+        allPokemon.length.toString()
+      );
     }
   }, [allPokemon.length]);
 
-  // Calculate the Pokemon ID based on global index (across all pages)
-  const getPokemonId = useCallback(
-    (index: number) => {
-      return index + 1;
-    },
-    []
-  );
+  useEffect(() => {
+    const currentLength = allPokemon.length;
 
-  // Intersection Observer for infinite scroll
+    if (!initializedRef.current && currentLength > 0) {
+      setAnimatedUpTo(currentLength);
+      initializedRef.current = true;
+    } else if (currentLength > animatedUpTo) {
+      const timer = setTimeout(() => {
+        setAnimatedUpTo(currentLength);
+      }, 600);
+      return () => clearTimeout(timer);
+    }
+  }, [allPokemon.length, animatedUpTo]);
+
+  const getPokemonId = useCallback((index: number) => {
+    return index + 1;
+  }, []);
+
   const observerTarget = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -86,39 +99,43 @@ export default function PokemonInfiniteList() {
           },
         }}
       >
-        {allPokemon.map((item, index) => (
-          <motion.div
-            key={`${item.name}-${index}`}
-            variants={{
-              hidden: { opacity: 0, y: 18 },
-              visible: {
-                opacity: 1,
-                y: 0,
-                transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] },
-              },
-            }}
-          >
-            <Card
-              src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${getPokemonId(
-                index
-              )}.png`}
-              title={item.name}
-              subTitle={
-                getPokemonId(index) < 10
-                  ? `#00${getPokemonId(index)}`
-                  : getPokemonId(index) < 100
+        {allPokemon.map((item, index) => {
+          const isNewItem = index >= animatedUpTo;
+
+          return (
+            <motion.div
+              key={`${item.name}-${index}`}
+              initial={isNewItem ? "hidden" : false}
+              animate="visible"
+              variants={{
+                hidden: { opacity: 0, y: 18 },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] },
+                },
+              }}
+            >
+              <Card
+                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${getPokemonId(
+                  index
+                )}.png`}
+                title={item.name}
+                subTitle={
+                  getPokemonId(index) < 10
+                    ? `#00${getPokemonId(index)}`
+                    : getPokemonId(index) < 100
                     ? `#0${getPokemonId(index)}`
                     : `#${getPokemonId(index)}`
-              }
-            />
-          </motion.div>
-        ))}
+                }
+              />
+            </motion.div>
+          );
+        })}
       </motion.div>
 
-      {/* Intersection observer target */}
       <div ref={observerTarget} className="h-10 w-full" />
 
-      {/* Load more button as fallback */}
       <div className="flex justify-center items-center py-4">
         {isFetchingNextPage && (
           <div className="text-muted-foreground text-sm">Loading more...</div>
@@ -142,4 +159,3 @@ export default function PokemonInfiniteList() {
     </>
   );
 }
-

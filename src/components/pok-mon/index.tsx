@@ -19,7 +19,7 @@ export default function PokemonPage({
   const limit = searchParams.get("limit");
   const mode = (searchParams.get("mode") as "list" | "infinite") || "list";
 
-  const { data, isPending } = usePokemonList({
+  const { data } = usePokemonList({
     initialValues: pokemonListResponse,
     searchParams,
   });
