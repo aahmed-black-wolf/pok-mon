@@ -27,7 +27,6 @@ export function Pagination({ count, countPerPage }: PaginationProps) {
         pages.push(i);
       }
     } else {
-      // Show first N pages based on screen size
       for (let i = 1; i <= firstPagesToShow; i++) {
         pages.push(i);
       }

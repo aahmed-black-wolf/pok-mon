@@ -19,14 +19,11 @@ export default function PokemonHeader() {
     params.set("mode", mode);
     
     if (mode === "infinite") {
-      // Reset offset when switching to infinite mode
       params.delete("offset");
     } else if (mode === "list") {
-      // When switching to list mode, calculate offset based on loaded count from infinite scroll
       const loadedCount = sessionStorage.getItem(INFINITE_LOADED_COUNT_KEY);
       if (loadedCount) {
         const loadedCountNum = parseInt(loadedCount, 10);
-        // Calculate which page to show (showing the last page that contains loaded Pokemon)
         const offset = Math.floor((loadedCountNum - 1) / LIMIT_PER_PAGE);
         params.set("offset", offset.toString());
         params.set("limit", LIMIT_PER_PAGE.toString());

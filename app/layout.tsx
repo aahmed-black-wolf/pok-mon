@@ -14,8 +14,23 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Poko - Mon",
-  description: "Poko - Mon",
+  title: "Pokédex - Discover All Pokémon",
+  description: "Explore the complete Pokédex with detailed information about all Pokémon. Browse through stats, abilities, types, and more!",
+  keywords: ["Pokemon", "Pokédex", "Pokedex", "Pokemon List", "Pokemon Stats", "Pokemon Database"],
+  authors: [{ name: "Pokédex Team" }],
+  openGraph: {
+    title: "Pokédex - Discover All Pokémon",
+    description: "Explore the complete Pokédex with detailed information about all Pokémon.",
+    type: "website",
+  },
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "any" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
 };
 
 export default function RootLayout({

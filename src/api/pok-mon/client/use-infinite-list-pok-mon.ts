@@ -19,7 +19,6 @@ export const useInfinitePokemonList = (limit: number = 20) => {
     queryKey: ["POKEMON-INFINITE-LIST", limit],
     queryFn: ({ pageParam = 0 }) => getPokemonList(pageParam as number, limit),
     getNextPageParam: (lastPage, allPages) => {
-      // If there's a next page URL, return the next page number
       if (lastPage.next) {
         return allPages.length;
       }

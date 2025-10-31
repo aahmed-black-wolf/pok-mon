@@ -1,33 +1,26 @@
 @import "tailwindcss";
 
-/* === Pokédex Theme Variables === */
 :root {
-  /* 🌿 Base */
   --background: #e9fff3;
   --foreground: #171717;
 
-  /* 🎨 Brand & Accent */
   --accent-color: #e94057;
   --gradient-start: #e94057;
   --gradient-end: #8a2387;
 
-  /* 🧱 Surfaces */
   --card-bg: #ffffff;
   --card-border: #e2e8f0;
   --card-hover: #f9fbff;
   --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 
-  /* 🔥 Pokémon Type & XP */
   --fire-color: #ff5959;
   --xp-color: #4f46e5;
 
-  /* 🖋 Text */
   --text-main: #1a1a1a;
   --text-muted: #777777;
   --title-text: #0f172a;
   --subtitle-text: #475569;
 
-  /* 🧭 Buttons & Pagination */
   --button-bg: #1f2937;
   --button-bg-hover: #111827;
   --button-text: #ffffff;
@@ -35,13 +28,10 @@
   --pagination-active: #3b82f6;
   --pagination-text: #1f2937;
 
-  /* ⚙️ Misc */
   --border-color: #dadada;
   --skeleton-bg: #eaeaea;
   --background-light: #ebf1fd;
 }
-
-/* === Tailwind Theme Mapping === */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
